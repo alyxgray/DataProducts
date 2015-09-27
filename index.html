@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fuel Economy Predictor</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Fuel Economy Predictor">
+  <meta name="author" content="Alyx Gray">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Fuel Economy Predictor</h1>
+    <h2></h2>
+    <p>Alyx Gray<br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Pragmatic Problem Solving</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Predicting vehicle fuel economy has practical application for different market sectors.  </p>
+
+<p>Prediction is done using a model built from a data collection of vehicle performance and build specifications.  Stepwise selection for simple linear regression was used to build the model.  This model uses vehicle weight, quarter-mile time, and transmission type as predictors for fuel efficiency.</p>
+
+<pre><code>## $call
+## lm(formula = mpg ~ wt + qsec + am, data = mtcars)
+</code></pre>
+
+<pre><code>## $coefficients
+## (Intercept)          wt        qsec          am 
+##    9.617781   -3.916504    1.225886    2.935837
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>User Interface</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>The application uses a Shiny web interface for receiving user input and reporting results.</p>
+
+<p><img src="shinyapp.png" alt="100px"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Application: Buyer&#39;s Guide</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>The fuel economy predictor can be used to estimate the effect that transmission type will have on fuel efficiency for a vehicle of a specified weight with known performance characteristics.  This knowledge can help a potential buyer decide what features he would like when optimizing his vehicle selection criteria.</p>
+
+<p>We can predict the fuel economy for a vehicle that weighs 2000 pounds, has a manual transmission, and has a quarter-mile time of 15 seconds:</p>
+
+<pre><code class="r">car_manual &lt;- data.frame(wt = 2, qsec = 15, am = 1)
+unname(predict(best_model, car_manual))
+</code></pre>
+
+<pre><code>## [1] 23.1089
+</code></pre>
+
+<p>We can predict the fuel economy for the same vehicle that is equipped with an automatic transmission:</p>
+
+<pre><code class="r">car_auto &lt;- data.frame(wt = 2, qsec = 15, am = 0)
+unname(predict(best_model, car_auto))
+</code></pre>
+
+<pre><code>## [1] 20.17306
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Application: High Performance Vehicles</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>The fuel economy predictor can be used to estimate fuel efficiency of high performance race car.  For example, it can be used to estimate the effect of adding or removing weight from a vehicle on fuel consumption.</p>
+
+<p>We can predict the fuel economy for a vehicle that weighs 2000 pounds, has a manual transmission, and has a quarter-mile time of 10 seconds:</p>
+
+<pre><code class="r">racecar_unmodified &lt;- data.frame(wt = 2, qsec = 10, am = 1)
+unname(predict(best_model, racecar_unmodified))
+</code></pre>
+
+<pre><code>## [1] 16.97947
+</code></pre>
+
+<p>We can predict the fuel economy for that same vehicle when the weight has been reduced to 1500 pounds:</p>
+
+<pre><code class="r">racecar_modified &lt;- data.frame(wt = 1.5, qsec = 10, am = 1)
+unname(predict(best_model, racecar_modified))
+</code></pre>
+
+<pre><code>## [1] 18.93772
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Pragmatic Problem Solving'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='User Interface'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Application: Buyer&#39;s Guide'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Application: High Performance Vehicles'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+</html>
